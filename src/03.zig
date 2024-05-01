@@ -1,8 +1,6 @@
 const std = @import("std");
 
-const INPUT = @embedFile("03.txt");
-
-pub fn part1() usize {
+pub fn part1(input: []const u8) usize {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
@@ -15,7 +13,7 @@ pub fn part1() usize {
 
     visited.put(.{ x, y }, {}) catch unreachable;
 
-    for (INPUT) |c| {
+    for (input) |c| {
         switch (c) {
             '^' => y += 1,
             'v' => y -= 1,
@@ -29,7 +27,7 @@ pub fn part1() usize {
     return visited.count();
 }
 
-pub fn part2() usize {
+pub fn part2(input: []const u8) usize {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
@@ -44,7 +42,7 @@ pub fn part2() usize {
 
     visited.put(.{ x1, y1 }, {}) catch unreachable;
 
-    for (INPUT, 0..) |c, i| {
+    for (input, 0..) |c, i| {
         const x = if (i % 2 == 0) &x1 else &x2;
         const y = if (i % 2 == 0) &y1 else &y2;
         switch (c) {

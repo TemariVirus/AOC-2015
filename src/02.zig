@@ -1,8 +1,6 @@
 const std = @import("std");
 const Allocator = std.mem.Allocator;
 
-const INPUT = @embedFile("02.txt");
-
 fn parseInput(allocator: Allocator, input: []const u8) ![][3]u32 {
     var sizes = std.ArrayList([3]u32).init(allocator);
     defer sizes.deinit();
@@ -20,12 +18,12 @@ fn parseInput(allocator: Allocator, input: []const u8) ![][3]u32 {
     return sizes.toOwnedSlice();
 }
 
-pub fn part1() u32 {
+pub fn part1(input: []const u8) u32 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
 
-    const sizes = parseInput(allocator, INPUT) catch unreachable;
+    const sizes = parseInput(allocator, input) catch unreachable;
     defer allocator.free(sizes);
 
     var total: u32 = 0;
@@ -40,12 +38,12 @@ pub fn part1() u32 {
     return total;
 }
 
-pub fn part2() u32 {
+pub fn part2(input: []const u8) u32 {
     var gpa = std.heap.GeneralPurposeAllocator(.{}){};
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
 
-    const sizes = parseInput(allocator, INPUT) catch unreachable;
+    const sizes = parseInput(allocator, input) catch unreachable;
     defer allocator.free(sizes);
 
     var total: u32 = 0;

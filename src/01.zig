@@ -1,8 +1,6 @@
-const INPUT = @embedFile("01.txt");
-
-pub fn part1() i32 {
+pub fn part1(input: []const u8) i32 {
     var floor: i32 = 0;
-    for (INPUT) |c| {
+    for (input) |c| {
         switch (c) {
             '(' => floor += 1,
             ')' => floor -= 1,
@@ -12,9 +10,9 @@ pub fn part1() i32 {
     return floor;
 }
 
-pub fn part2() u32 {
+pub fn part2(input: []const u8) u32 {
     var floor: i32 = 0;
-    for (INPUT, 0..) |c, i| {
+    for (input, 0..) |c, i| {
         switch (c) {
             '(' => floor += 1,
             ')' => floor -= 1,

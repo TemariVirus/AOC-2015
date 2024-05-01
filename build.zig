@@ -10,6 +10,8 @@ pub fn build(b: *std.Build) !void {
     }
     var day_file: [10]u8 = undefined;
     _ = std.fmt.bufPrint(&day_file, "src/{d:0>2}.zig", .{day}) catch unreachable;
+    var input_file: [10]u8 = undefined;
+    _ = std.fmt.bufPrint(&input_file, "src/{d:0>2}.txt", .{day}) catch unreachable;
 
     const day_lib = b.addModule("day", .{
         .root_source_file = .{ .path = &day_file },
@@ -24,6 +26,10 @@ pub fn build(b: *std.Build) !void {
         .optimize = optimize,
     });
     exe.root_module.addImport("day", day_lib);
+
+    const options = b.addOptions();
+    options.addOption([]const u8, "file", &input_file);
+    exe.root_module.addOptions("input", options);
 
     b.installArtifact(exe);
 

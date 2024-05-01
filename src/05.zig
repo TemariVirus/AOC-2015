@@ -1,7 +1,5 @@
 const std = @import("std");
 
-const INPUT = @embedFile("05.txt");
-
 fn isNice1(s: []const u8) bool {
     // At least 3 vowels
     var vowels: usize = 0;
@@ -38,8 +36,8 @@ fn isNice1(s: []const u8) bool {
     return true;
 }
 
-pub fn part1() usize {
-    var lines = std.mem.tokenizeAny(u8, INPUT, "\n\r");
+pub fn part1(input: []const u8) usize {
+    var lines = std.mem.tokenizeAny(u8, input, "\n\r");
     var count: usize = 0;
     while (lines.next()) |line| {
         if (isNice1(line)) {
@@ -78,8 +76,8 @@ fn isNice2(s: []const u8) bool {
     return true;
 }
 
-pub fn part2() usize {
-    var lines = std.mem.tokenizeAny(u8, INPUT, "\n\r");
+pub fn part2(input: []const u8) usize {
+    var lines = std.mem.tokenizeAny(u8, input, "\n\r");
     var count: usize = 0;
     while (lines.next()) |line| {
         if (isNice2(line)) {
