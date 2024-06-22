@@ -7,7 +7,7 @@ pub fn main() !void {
     const allocator = gpa.allocator();
     defer _ = gpa.deinit();
 
-    const input = try std.fs.cwd().readFileAlloc(allocator, input_file, std.math.maxInt(usize));
+    const input: []const u8 = try std.fs.cwd().readFileAlloc(allocator, input_file, std.math.maxInt(usize));
     defer allocator.free(input);
 
     if (@hasDecl(day, "part1")) {
@@ -16,7 +16,10 @@ pub fn main() !void {
         const time_taken: u64 = @intCast(std.time.nanoTimestamp() - start);
 
         std.debug.print("--- Part 1 ---\n", .{});
-        std.debug.print("Answer: {}\n", .{answer});
+        switch (@typeInfo(@TypeOf(answer))) {
+            .Pointer, .Array => std.debug.print("Answer: {s}\n", .{answer}),
+            else => std.debug.print("Answer: {any}\n", .{answer}),
+        }
         std.debug.print("Time Taken: {}\n", .{std.fmt.fmtDuration(time_taken)});
     }
 
@@ -26,7 +29,10 @@ pub fn main() !void {
         const time_taken: u64 = @intCast(std.time.nanoTimestamp() - start);
 
         std.debug.print("--- Part 2 ---\n", .{});
-        std.debug.print("Answer: {}\n", .{answer});
+        switch (@typeInfo(@TypeOf(answer))) {
+            .Pointer, .Array => std.debug.print("Answer: {s}\n", .{answer}),
+            else => std.debug.print("Answer: {any}\n", .{answer}),
+        }
         std.debug.print("Time Taken: {}\n", .{std.fmt.fmtDuration(time_taken)});
     }
 }

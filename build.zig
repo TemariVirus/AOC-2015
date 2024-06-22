@@ -14,14 +14,14 @@ pub fn build(b: *std.Build) !void {
     _ = std.fmt.bufPrint(&input_file, "src/{d:0>2}.txt", .{day}) catch unreachable;
 
     const day_lib = b.addModule("day", .{
-        .root_source_file = .{ .path = &day_file },
+        .root_source_file = lazyPath(b, &day_file),
         .target = target,
         .optimize = optimize,
     });
 
     const exe = b.addExecutable(.{
         .name = "AOC-2015",
-        .root_source_file = .{ .path = "src/main.zig" },
+        .root_source_file = lazyPath(b, "src/main.zig"),
         .target = target,
         .optimize = optimize,
     });
@@ -40,4 +40,13 @@ pub fn build(b: *std.Build) !void {
     }
     const run_step = b.step("run", "Run the app");
     run_step.dependOn(&run_cmd.step);
+}
+
+fn lazyPath(b: *std.Build, path: []const u8) std.Build.LazyPath {
+    return .{
+        .src_path = .{
+            .owner = b,
+            .sub_path = path,
+        },
+    };
 }
